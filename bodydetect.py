@@ -11,10 +11,10 @@ from ultralytics import YOLO
 mp_drawing = mp.solutions.drawing_utils
 mp_face_detection = mp.solutions.face_detection
 # --- ステップ3で解除 ---
-mp_hands = mp.solutions.hands
+# mp_hands = mp.solutions.hands
 # --- ステップ5で解除 ---
-mp_pose = mp.solutions.pose 
-mp_selfie_segmentation = mp.solutions.selfie_segmentation
+# mp_pose = mp.solutions.pose 
+# mp_selfie_segmentation = mp.solutions.selfie_segmentation
 
 # --- ステップ4で解除 ---
 # YOLOv8モデルの読み込み（キャッシュを利用して高速化）
@@ -58,13 +58,13 @@ cap = cv2.VideoCapture(0)
 # yolo_model = load_yolo_model()
 
 # --- ステップ2で解除 ---
-with mp_face_detection.FaceDetection(model_selection=0, min_detection_confidence=0.5) as face_detection, \
-     mp_hands.Hands(model_complexity=0, min_detection_confidence=0.5, min_tracking_confidence=0.5) as hands, \
-     mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose, \
-     mp_selfie_segmentation.SelfieSegmentation(model_selection=1) as selfie_segmentation:
+# with mp_face_detection.FaceDetection(model_selection=0, min_detection_confidence=0.5) as face_detection, \
+#      mp_hands.Hands(model_complexity=0, min_detection_confidence=0.5, min_tracking_confidence=0.5) as hands, \
+#      mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose, \
+#      mp_selfie_segmentation.SelfieSegmentation(model_selection=1) as selfie_segmentation:
 
     # --- ステップ1から使う ---
-    while cap.isOpened() and st.session_state['mode'] != 'Stop':
+while cap.isOpened() and st.session_state['mode'] != 'Stop':
         success, image = cap.read()
         if not success:
             break

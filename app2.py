@@ -39,12 +39,6 @@ while cap.isOpened() and st.session_state['mode'] != 'Stop':
     if st.session_state['mode'] == 'Cartoon': # ◀ カートゥーン処理を追加
         processed_image = cartoon_styler.process(image)
     
-    elif st.session_state['mode'] == 'BicepCurl':
-        # (筋トレカウンターの処理は省略)
-        pass
-    
-    # (他のモードの処理は省略)
-
     frame_placeholder.image(processed_image, channels="BGR")
 
 # (後処理は省略)
