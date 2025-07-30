@@ -1,85 +1,83 @@
 # 必要な「魔法の道具箱」を使えるように準備するおまじない
 import streamlit as st
 import cv2
-# 自分たちで作った「カートゥーン風加工の専門家」のファイルをインポートする
-from processors import cartoon_styler
+import mediapipe as mp
+import numpy as np 
 
-# Webページに「看板（タイトル）」を出す
-st.title("📹 カートゥーン風エフェクトデモ")
+# MediaPipeという道具箱から、「絵を描く道具」と「顔の細かい特徴を見つける専門家」を準備
+mp_drawing = mp.solutions.drawing_utils
+mp_face_mesh = mp.solutions.face_mesh
+
+
+# --- ここからWebページの見た目を作る ---
+
+# Webページに一番大きな「看板（タイトル）」を出す
+st.title("📹 リアルタイムAI解析アプリを作ろう！")
 # 画面の左側（サイドバー）に「説明」を表示する
 st.sidebar.markdown("### 解析モードを選択してください")
 
 
-# --- アプリの状態を覚えておくための「メモ帳」の準備 ---
-# st.session_state というアプリ専用のメモ帳を使う
+# --- ボタンが押されたときの「状態」を覚えておく仕組み ---
 
-# もしメモ帳に「mode」という項目がなければ、最初に「Stop」と書いておく
+# もし「mode」という名前の「状態いれもの」がなければ、最初に作っておく
+# 最初は「止まっている(Stop)」状態にしておく
 if 'mode' not in st.session_state:
     st.session_state['mode'] = 'Stop'
 
-
-# --- ボタンを作って、押されたらメモ帳を書き換える ---
-
-# 「カートゥーン風エフェクト」ボタン。押されたら、メモ帳の「mode」を「Cartoon」に書き換える
-if st.sidebar.button("🎨 カートゥーン風エフェクト"):
-    st.session_state['mode'] = 'Cartoon'
-# 「停止」ボタン。押されたら、メモ帳の「mode」を「Stop」に書き換える
+# 「顔の特徴」ボタン。押されると、「状態いれもの」に「FaceMesh」という文字を入れる
+if st.sidebar.button("✨ 顔の特徴 (メッシュ)"):
+    st.session_state['mode'] = 'FaceMesh'
+# 「停止」ボタン。押されると、「状態いれもの」に「Stop」という文字を入れる
 if st.sidebar.button("🛑 停止"):
     st.session_state['mode'] = 'Stop'
 
-
-# --- エフェクトの強さを調整する「つまみ（スライダー）」を作る ---
-
-# もし今のモードが「Cartoon」だったら、サイドバーに調整用のスライダーを表示する
-if st.session_state['mode'] == 'Cartoon':
-    st.sidebar.subheader("パラメータ調整")
-    # st.sidebar.slider() で、見た目を調整する「つまみ」を作る
-    bilateral_d = st.sidebar.slider("色の滑らかさ (d)", 3, 15, 9, step=2)
-    bilateral_sigmaColor = st.sidebar.slider("色の範囲 (sigmaColor)", 50, 500, 300, step=10)
-    median_ksize = st.sidebar.slider("輪郭の滑らかさ (ksize)", 3, 15, 7, step=2)
-    adaptive_blockSize = st.sidebar.slider("輪郭の細かさ (blockSize)", 3, 25, 13, step=2)
-    adaptive_C = st.sidebar.slider("輪郭の強さ (C)", 0, 10, 2, step=1)
+# 今の状態（モード）をサイドバーに表示する
+st.sidebar.markdown(f"**現在のモード:** `{st.session_state['mode']}`")
 
 
 # --- ここからカメラの映像を処理する ---
 
 # 映像を表示するための「空の場所（額縁）」をページに用意する
 frame_placeholder = st.empty()
+# PCのカメラを起動する
+cap = cv2.VideoCapture(0)
 
-# もし今のモードが「Cartoon」だったら、カメラを起動して処理を始める
-if st.session_state['mode'] == 'Cartoon':
-    # PCのカメラを起動する
-    cap = cv2.VideoCapture(0)
+# 「顔の細かい特徴を見つける専門家」を呼び出して、準備してもらう
+with mp_face_mesh.FaceMesh(max_num_faces=1, refine_landmarks=True, min_detection_confidence=0.5, min_tracking_confidence=0.5) as face_mesh:
 
-    # 「停止」ボタンが押されるまで、ずっと繰り返す
-    while st.session_state['mode'] == 'Cartoon':
+    # カメラが起動していて、かつ「停止」モードではない間、ずっと繰り返す
+    while cap.isOpened() and st.session_state['mode'] != 'Stop':
         # カメラから1枚の画像(フレーム)を読み込む
         success, image = cap.read()
         if not success:
-            st.error("カメラの読み込みに失敗しました。")
             break
 
         # 映像を鏡のように左右反転させる
         image = cv2.flip(image, 1)
-        
-        # 「専門家」に「今のカメラ画像」と「スライダーで調整した値」を渡して、加工をお願いする
-        processed_image = cartoon_styler.process(
-            image,
-            bilateral_d=bilateral_d,
-            bilateral_sigmaColor=bilateral_sigmaColor,
-            bilateral_sigmaSpace=bilateral_sigmaColor,
-            median_ksize=median_ksize,
-            adaptive_blockSize=adaptive_blockSize,
-            adaptive_C=adaptive_C
-        )
-        
-        # 準備しておいた「空の場所（額縁）」に、加工が終わった画像を表示する
-        frame_placeholder.image(processed_image, channels="BGR")
-    
-    # （ループが終わったら）使い終わったカメラを解放する（お片付け）
-    cap.release()
+        # 処理した後の画像を入れるための変数を用意
+        processed_image = image
 
-# もし今のモードが「Stop」だったら…
-else:
-    # メッセージを表示する
-    frame_placeholder.write("「カートゥーン風エフェクト」ボタンを押してください。")
+        # 画像の色を、AIが理解しやすい「RGB」形式に変換する
+        image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+        # もし今のモードが「FaceMesh」なら、顔の特徴点検出を行う
+        if st.session_state['mode'] == 'FaceMesh':
+            # 「専門家」に画像を見せて、顔の細かい点（478個！）を探してもらう
+            results = face_mesh.process(image_rgb)
+            
+            # もし顔の点が見つかったら、それらを線で結んで網（メッシュ）を描く
+            if results.multi_face_landmarks:
+                for face_landmarks in results.multi_face_landmarks:
+                    mp_drawing.draw_landmarks(
+                        image=processed_image,
+                        landmark_list=face_landmarks,
+                        connections=mp_face_mesh.FACEMESH_TESSELATION, # 点と点を結ぶ線の情報
+                        landmark_drawing_spec=None, # 点自体は描かない
+                        connection_drawing_spec=mp_drawing.DrawingSpec(color=(0,255,0), thickness=1)) # 線の色や太さ
+
+        # 準備しておいた「空の場所（額縁）」に、処理が終わった画像を表示する
+        frame_placeholder.image(processed_image, channels="BGR")
+
+# （ループが終わったら）使い終わったカメラを解放する（お片付け）
+cap.release()
+cv2.destroyAllWindows()
