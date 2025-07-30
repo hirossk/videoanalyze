@@ -71,7 +71,7 @@ def process(image, pose, counter, stage, prev_current):
         
         # もし１つ前の傾き(prev_current)と今の傾き(current)が変化した瞬間だったら…
         if prev_current != current:
-            # 「水平」→「右下がり」→「水平」→「左下がり」→「水平」の順で進んだら1回とカウントする
+            # 「水平」→「左下がり」→「水平」→「右下がり」→「水平」の順で進んだら1回とカウントする
             if stage == "水平" and current == "左下がり":
                 stage = "左下がり"
             elif stage == "左下がり" and current == "水平":
@@ -79,7 +79,7 @@ def process(image, pose, counter, stage, prev_current):
             elif stage == "水平2" and current == "右下がり":
                 stage = "右下がり"
             elif stage == "右下がり" and current == "水平":
-                counter += 1
+                # counter = counter + 1
                 stage = "水平"
         
         # 今の傾きを「１つ前の傾き」として覚えておく
