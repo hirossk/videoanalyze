@@ -60,23 +60,23 @@ def process(image, pose, counter, stage, prev_current):
             current = "水平"
         # もし差がプラスなら、右肩が下がっているので「右下がり」
         elif diff > threshold:
-            current = "右下がり"
+            current = "左下がり"
         # もし差がマイナスなら、左肩が下がっているので「左下がり」
         elif diff < -threshold:
-            current = "左下がり"
+            current = "右下がり"
 
         # --- ストレッチの段階を進めるエリア ---
         
         # もし１つ前の傾き(prev_current)と今の傾き(current)が変化した瞬間だったら…
         if prev_current != current:
             # 「水平」→「右下がり」→「水平」→「左下がり」→「水平」の順で進んだら1回とカウントする
-            if stage == "水平" and current == "右下がり":
-                stage = "右下がり"
-            elif stage == "右下がり" and current == "水平":
-                stage = "水平2"
-            elif stage == "水平2" and current == "左下がり":
+            if stage == "水平" and current == "左下がり":
                 stage = "左下がり"
             elif stage == "左下がり" and current == "水平":
+                stage = "水平2"
+            elif stage == "水平2" and current == "右下がり":
+                stage = "右下がり"
+            elif stage == "右下がり" and current == "水平":
                 counter += 1
                 stage = "水平"
         
