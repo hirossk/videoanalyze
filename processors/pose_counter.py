@@ -43,6 +43,8 @@ def process(image, pose, counter, stage, prev_current):
         # --- 肩の傾きを計算するエリア ---
         
         # 座標リストから「右耳」と「左耳」の場所(x, y座標)を取り出す
+        # 右ひじと左ひじの座標を取得に変更しましょう[RIGHT_ELBOW と LEFT_ELBOW]
+        # 右肩と左肩の座標を取得に変更しましょう[RIGHT_SHOULDER と LEFT_SHOULDER]
         right_shoulder = [landmarks[mp_pose.PoseLandmark.RIGHT_EAR.value].x, landmarks[mp_pose.PoseLandmark.RIGHT_EAR.value].y]
         left_shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_EAR.value].x, landmarks[mp_pose.PoseLandmark.LEFT_EAR.value].y]
         
