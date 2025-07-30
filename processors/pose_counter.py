@@ -79,7 +79,6 @@ def process(image, pose, counter, stage, prev_current):
             elif stage == "水平2" and current == "右下がり":
                 stage = "右下がり"
             elif stage == "右下がり" and current == "水平":
-                # counter = counter + 1
                 stage = "水平"
         
         # 今の傾きを「１つ前の傾き」として覚えておく
@@ -101,7 +100,7 @@ def process(image, pose, counter, stage, prev_current):
     
     # put_japanese_text関数を使って日本語を描画
     image = put_japanese_text(image, "回数", (15,10), font_path, 20, (0,0,0))
-    image = put_japanese_text(image, str(counter), (10,30), font_path, 40, (255,255,255))
+    image = put_japanese_text(image, str(counter), (10,30), font_path, 30, (255,255,255))
     image = put_japanese_text(image, f"状態: {stage}", (130,35), font_path, 25, (0,0,0))
 
 

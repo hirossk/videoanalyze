@@ -7,7 +7,7 @@ from processors import cartoon_styler
 # Webページに「看板（タイトル）」を出す
 st.title("📹 カートゥーン風エフェクトデモ")
 # 画面の左側（サイドバー）に「説明」を表示する
-st.sidebar.markdown("### 解析モードを選択してください")
+st.sidebar.markdown("モードを選択してください")
 
 
 # --- アプリの状態を覚えておくための「メモ帳」の準備 ---

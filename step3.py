@@ -2,6 +2,7 @@
 import streamlit as st
 import cv2
 import mediapipe as mp
+from processors.emoji_drawer import draw_face_emoji
 
 # MediaPipeという道具箱から、「絵を描く道具」と「顔を見つける専門家」を準備
 mp_drawing = mp.solutions.drawing_utils
@@ -13,7 +14,7 @@ mp_face_detection = mp.solutions.face_detection
 # Webページに一番大きな「看板（タイトル）」を出す
 st.title("📹 リアルタイムAI解析アプリを作ろう！")
 # 画面の左側（サイドバー）に「説明」を表示する
-st.sidebar.markdown("### 解析モードを選択してください")
+st.sidebar.markdown("モードを選択してください")
 
 
 # --- ボタンが押されたときの「状態」を覚えておく仕組み ---
@@ -68,10 +69,26 @@ with mp_face_detection.FaceDetection(model_selection=0, min_detection_confidence
             # もし顔が見つかったら、その場所に四角を描く
             if results.detections:
                 # 最初に見つかった顔に対して、四角を描く
-                mp_drawing.draw_detection(processed_image, results.detections[0])
-                pass
-                # for detection in results.detections:
+                # mp_drawing.draw_detection(processed_image, results.detections[0])
+                # pass
+                # もし複数の顔が見つかったら、全ての顔に対して四角を描く
+                # for文は繰り返すという意味
+                for detection in results.detections:
+                    pass
+                    # 四角とマーカーを描く
                     # mp_drawing.draw_detection(processed_image, detection)
+                    # 顔の位置を取得して、絵文字を描く
+                    # bboxC = detection.location_data.relative_bounding_box
+                    # ih, iw, _ = processed_image.shape
+                    # x = int(bboxC.xmin * iw)
+                    # y = int(bboxC.ymin * ih)
+                    # w = int(bboxC.width * iw)
+                    # h = int(bboxC.height * ih)
+                    
+                    # face_emoji = "A"
+                    # font_path = "C:/Windows/Fonts/seguiemj.ttf"  # 必要に応じて変更
+                    # # 顔の中心座標を計算
+                    # processed_image = draw_face_emoji(processed_image, x, y, w, h, face_emoji, font_path)
 
         # 準備しておいた「空の場所（額縁）」に、処理が終わった画像を表示する
         frame_placeholder.image(processed_image, channels="BGR")

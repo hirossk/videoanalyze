@@ -14,7 +14,7 @@ mp_hands = mp.solutions.hands
 # Webページに一番大きな「看板（タイトル）」を出す
 st.title("📹 リアルタイムAI解析アプリを作ろう！")
 # 画面の左側（サイドバー）に「説明」を表示する
-st.sidebar.markdown("### 解析モードを選択してください")
+st.sidebar.markdown("モードを選択してください")
 
 
 # --- ボタンが押されたときの「状態」を覚えておく仕組み ---

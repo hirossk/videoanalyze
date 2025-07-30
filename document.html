@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>授業用スライド：AIを使った動画分析</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* M PLUS Rounded 1cフォントを適用 */
+        body {
+            font-family: 'M PLUS Rounded 1c', 'Inter', sans-serif;
+            -webkit-print-color-adjust: exact; /* For Chrome, Safari */
+            color-adjust: exact; /* For Firefox */
+        }
+        
+        /* スライドの基本スタイル */
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            border: 1px solid #ddd;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            background-color: #f9fafb; /* 全体の背景色を少しグレーに */
+        }
+
+        /* アクティブなスライドを表示 */
+        .slide.active {
+            display: block;
+        }
+
+        /* 印刷時のスタイル */
+        @media print {
+            body, html {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            /* ページネーションとボタンを非表示 */
+            .pagination-controls, .print-button {
+                display: none !important;
+            }
+            /* 各スライドをページごとに表示 */
+            .slide {
+                display: block !important;
+                width: 100% !important;
+                height: 98vh !important; /* 印刷時に1ページに収まるように高さを調整 */
+                page-break-after: always; /* 各スライドの後に改ページ */
+                border: none;
+                box-shadow: none;
+                border-radius: 0;
+                overflow: hidden;
+            }
+            .slide:last-child {
+                page-break-after: auto;
+            }
+        }
+
+        .slide-content {
+            padding: 2.5rem 3.5rem;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4 sm:p-8">
+
+    <div id="slides-container" class="w-full max-w-4xl aspect-[16/9] bg-white rounded-2xl">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <div class="w-full h-full flex flex-col justify-center items-center p-8 bg-gradient-to-br from-blue-50 to-indigo-100">
+                <div class="text-center">
+                    <p class="text-2xl md:text-3xl text-indigo-600 font-bold">中学生向け授業</p>
+                    <h1 class="text-5xl md:text-7xl font-extrabold text-gray-800 mt-2">AIを使った動画分析</h1>
+                    <p class="text-xl md:text-2xl text-gray-500 mt-6">〜君もAIクリエイターになろう！〜</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: What is AI? -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4 text-center">1. AIってなんだろう？</h2>
+                <p class="text-xl text-gray-700 leading-relaxed mb-8 text-center">AI（人工知知能）は、<span class="font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded">コンピューターが人間のように考え、学ぶ技術</span>のことだよ。</p>
+                <div class="flex-grow flex items-center justify-around gap-8">
+                    <div class="card text-center p-6 bg-white rounded-xl shadow-lg w-1/3">
+                        <p class="text-6xl mb-3">📱</p>
+                        <h3 class="font-bold text-lg">スマホの顔認証</h3>
+                        <p class="text-sm text-gray-600 mt-1">ロック解除で使ってるね</p>
+                    </div>
+                    <div class="card text-center p-6 bg-white rounded-xl shadow-lg w-1/3">
+                        <p class="text-6xl mb-3">🎮</p>
+                        <h3 class="font-bold text-lg">ゲームのキャラクター</h3>
+                        <p class="text-sm text-gray-600 mt-1">賢い敵キャラの動き</p>
+                    </div>
+                    <div class="card text-center p-6 bg-white rounded-xl shadow-lg w-1/3">
+                        <p class="text-6xl mb-3">🚗</p>
+                        <h3 class="font-bold text-lg">車の自動運転</h3>
+                        <p class="text-sm text-gray-600 mt-1">周りの状況を判断する</p>
+                    </div>
+                </div>
+                <p class="text-lg text-gray-600 text-center mt-8">実は、AIはもうみんなの身近なところで活躍しているんだ！</p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Today's Tool "MediaPipe" -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">2. 今日の相棒「MediaPipe」</h2>
+                <p class="text-xl text-gray-700 leading-relaxed mb-6">Googleが開発したAIの道具箱。カメラ映像から<span class="font-bold text-green-600">体や顔のパーツの位置</span>をリアルタイムで見つけ出すのが得意なんだ。</p>
+                <div class="flex-grow flex items-center bg-white p-6 rounded-lg shadow-inner">
+                    <div class="w-1/3 text-center">
+                        <p class="text-6xl">🤖</p>
+                        <p class="font-bold text-2xl mt-2 text-green-600">MediaPipe</p>
+                    </div>
+                    <div class="w-2/3 grid grid-cols-2 gap-4 pl-6 border-l-4 border-green-200">
+                        <div class="bg-green-50 p-4 rounded-lg card"><p class="text-3xl mb-1">👀</p><p class="font-semibold">顔のパーツを検出</p></div>
+                        <div class="bg-green-50 p-4 rounded-lg card"><p class="text-3xl mb-1">🖐️</p><p class="font-semibold">手の動きを追跡</p></div>
+                        <div class="bg-green-50 p-4 rounded-lg card"><p class="text-3xl mb-1">🏃</p><p class="font-semibold">体の骨格を認識</p></div>
+                        <div class="bg-green-50 p-4 rounded-lg card"><p class="text-3xl mb-1">⚡️</p><p class="font-semibold">リアルタイムで高速処理</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Step 1 - Camera as AI's Eyes -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4 text-center">3. ステップ① AIの目を用意する</h2>
+                <p class="text-xl text-gray-700 leading-relaxed mb-10 text-center">まず、AIが世界を見るための「目」＝PCのカメラを用意しよう。簡単なプログラムで実現できるんだ。</p>
+                <div class="flex-grow flex items-center justify-center gap-6">
+                    <div class="text-center card bg-white p-6 rounded-lg shadow-md">
+                        <p class="text-6xl mb-2">👨‍💻</p><p class="font-semibold">プログラムを書く</p>
+                    </div>
+                    <p class="text-6xl font-light text-gray-400">→</p>
+                    <div class="text-center card bg-white p-6 rounded-lg shadow-md">
+                        <p class="text-6xl mb-2">📷</p><p class="font-semibold">カメラを起動する</p>
+                    </div>
+                    <p class="text-6xl font-light text-gray-400">→</p>
+                    <div class="text-center card bg-white p-6 rounded-lg shadow-md">
+                        <p class="text-6xl mb-2">🤖</p><p class="font-semibold">AIに映像を見せる</p>
+                    </div>
+                </div>
+                <p class="text-lg text-gray-600 text-center mt-10 bg-yellow-100 p-4 rounded-lg">ここが全ての始まり！AIに「入力」を与える大切なステップだよ。</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Step 2 - Face Detection -->
+        <div class="slide">
+            <div class="slide-content flex-row items-center gap-8">
+                <div class="w-1/2 h-full flex flex-col justify-center items-center bg-purple-100 rounded-lg p-6">
+                    <img src="https://placehold.co/300x300/E9D5FF/8B5CF6?text=Face+Detection" alt="顔検出のイメージ" class="rounded-lg shadow-2xl">
+                </div>
+                <div class="w-1/2">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">4. ステップ② 「顔」を見つける</h2>
+                    <p class="text-xl text-gray-700 leading-relaxed mb-6">AIは映像の中から、人の顔がどこにあるかを見つけられる。<span class="font-bold text-purple-600">「顔検出」</span>という技術だよ。</p>
+                    <div class="space-y-3">
+                        <div class="bg-white p-4 rounded-lg shadow-sm"><strong>応用例①:</strong> 自動で顔にスタンプを付ける</div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm"><strong>応用例②:</strong> 写真に写っている人数を数える</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Step 3 - Hand and Body Tracking -->
+        <div class="slide">
+             <div class="slide-content flex-row items-center gap-8">
+                <div class="w-1/2">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">5. ステップ③ 「手」や「体」を追跡する</h2>
+                    <p class="text-xl text-gray-700 leading-relaxed mb-6">顔だけじゃない！AIは<span class="font-bold text-red-600">手や体の関節の位置</span>も見つけられる。これを<span class="font-bold">「ランドマーク」</span>と呼ぶよ。</p>
+                    <div class="space-y-3">
+                        <div class="bg-white p-4 rounded-lg shadow-sm"><strong>応用例①:</strong> ジェスチャーでPCを操作する</div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm"><strong>応用例②:</strong> 自分の動きを真似するアバター</div>
+                    </div>
+                </div>
+                <div class="w-1/2 h-full flex flex-col justify-center items-center bg-red-100 rounded-lg p-6">
+                    <img src="https://placehold.co/300x300/FEE2E2/DC2626?text=Pose+Tracking" alt="骨格検出のイメージ" class="rounded-lg shadow-2xl">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Let's Try 1 - Virtual Sunglasses -->
+        <div class="slide">
+            <div class="slide-content justify-center">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4 text-center">6. やってみよう① バーチャルサングラス 😎</h2>
+                <p class="text-xl text-gray-700 leading-relaxed mb-8 text-center">AIが<span class="font-bold text-yellow-500">両目の正確な位置</span>を教えてくれるから、そこにピッタリ合うように画像を重ねられるんだ！</p>
+                <div class="flex items-center justify-center gap-4">
+                    <div class="text-center">
+                        <img src="https://placehold.co/200x200/FEF3C7/FBBF24?text=Face+Landmarks" alt="顔のランドマーク" class="rounded-lg shadow-md">
+                        <p class="mt-2 font-semibold">顔のパーツを特定</p>
+                    </div>
+                    <p class="text-6xl font-light text-gray-400">+</p>
+                    <div class="text-center">
+                        <img src="https://irasutoya.jp/wp-content/uploads/2020/08/anim-shonsangurasu-no-irasuto-png-t-ka.png" alt="サングラスのイラスト" class="w-48 h-auto">
+                        <p class="mt-2 font-semibold">サングラスの画像</p>
+                    </div>
+                     <p class="text-6xl font-light text-gray-400">=</p>
+                    <div class="text-center">
+                         <img src="https://placehold.co/200x200/FEF3C7/FBBF24?text=Result" alt="合成結果" class="rounded-lg shadow-md">
+                        <p class="mt-2 font-semibold">ぴったり合成！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Let's Try 2 - Background Change -->
+        <div class="slide">
+            <div class="slide-content justify-center">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4 text-center">7. やってみよう② 背景を変える 🖼️</h2>
+                <p class="text-xl text-gray-700 leading-relaxed mb-8 text-center">AIは<span class="font-bold text-teal-500">「どこまでが人物か」</span>を判断できる。<span class="font-bold">「セグメンテーション」</span>という技術で、背景だけを加工できるんだ。</p>
+                <div class="flex items-center justify-center gap-8">
+                    <div class="text-center">
+                        <img src="https://placehold.co/250x250/CCFBF1/14B8A6?text=Original" alt="元の画像" class="rounded-lg shadow-md">
+                        <p class="mt-2 font-semibold">元の画像</p>
+                    </div>
+                    <p class="text-6xl font-light text-gray-400">→</p>
+                    <div class="text-center">
+                        <img src="https://placehold.co/250x250/CCFBF1/14B8A6?text=Processed" alt="加工後の画像" class="rounded-lg shadow-md">
+                        <p class="mt-2 font-semibold">背景だけを加工！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: More Possibilities with AI -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">8. AIでできること、もっと広がる！</h2>
+                <p class="text-xl text-gray-700 leading-relaxed mb-6">今日学んだ技術を組み合わせると、もっとすごいことができる！<br>君ならどんなアイデアを思いつくかな？</p>
+                <div class="flex-grow grid grid-cols-2 gap-6 text-center text-gray-700">
+                    <div class="bg-red-100 p-6 rounded-lg flex flex-col justify-center items-center card">
+                        <p class="text-5xl mb-2">🤸‍♂️</p>
+                        <p class="font-semibold">特定のポーズをしたら<br>エフェクトが出るゲーム</p>
+                    </div>
+                    <div class="bg-blue-100 p-6 rounded-lg flex flex-col justify-center items-center card">
+                        <p class="text-5xl mb-2">😄</p>
+                        <p class="font-semibold">表情を読み取って<br>キャラクターの顔を変える</p>
+                    </div>
+                    <div class="bg-green-100 p-6 rounded-lg flex flex-col justify-center items-center card">
+                        <p class="text-5xl mb-2">🖐️</p>
+                        <p class="font-semibold">手の形で図形を描く<br>お絵かきツール</p>
+                    </div>
+                    <div class="bg-yellow-100 p-6 rounded-lg flex flex-col justify-center items-center card">
+                        <p class="text-5xl mb-2">🕺</p>
+                        <p class="font-semibold">ダンスの動きを採点する<br>アプリ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Summary -->
+        <div class="slide">
+            <div class="w-full h-full flex flex-col justify-center items-center p-8 bg-gradient-to-br from-gray-700 to-gray-900 text-white">
+                <h2 class="text-4xl font-bold mb-6">今日のまとめ</h2>
+                <div class="text-2xl space-y-4">
+                    <p>✅ AIはカメラ映像から<span class="font-bold text-yellow-300">人や物の特徴</span>を見つけられる。</p>
+                    <p>✅ 「顔検出」や「骨格検出」で<span class="font-bold text-yellow-300">体のパーツの位置</span>がわかる。</p>
+                    <p>✅ その情報を使って、<span class="font-bold text-yellow-300">便利なアプリや面白いゲーム</span>が作れる。</p>
+                </div>
+                <p class="text-3xl font-bold mt-12 animate-pulse">未来のAIクリエイターは、君たちだ！</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination Controls -->
+    <div class="pagination-controls w-full max-w-4xl flex justify-between items-center mt-4">
+        <button id="prev-btn" class="bg-white text-gray-700 font-bold py-2 px-6 rounded-lg shadow-md hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+            前へ
+        </button>
+        <div id="page-indicator" class="text-gray-600 font-medium">
+            1 / 10
+        </div>
+        <button id="next-btn" class="bg-blue-500 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+            次へ
+        </button>
+    </div>
+    
+    <!-- Print Button -->
+    <div class="print-button mt-6">
+         <button onclick="window.print()" class="bg-gray-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-gray-700 transition-colors">
+            🖨️ スライドを印刷
+        </button>
+    </div>
+
+
+    <script>
+        // スライドとページネーションの要素を取得
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const pageIndicator = document.getElementById('page-indicator');
+        
+        // 現在のスライド番号を管理
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+
+        // スライドを更新する関数
+        function updateSlides() {
+            // すべてのスライドからactiveクラスを削除
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentSlide);
+            });
+            
+            // ページ番号表示を更新
+            pageIndicator.textContent = `${currentSlide + 1} / ${totalSlides}`;
+            
+            // ボタンの有効/無効を切り替え
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+        }
+
+        // 「次へ」ボタンのクリックイベント
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlides();
+            }
+        });
+
+        // 「前へ」ボタンのクリックイベント
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlides();
+            }
+        });
+
+        // キーボードの左右矢印キーでスライドを操作
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                nextBtn.click();
+            } else if (e.key === 'ArrowLeft') {
+                prevBtn.click();
+            }
+        });
+
+        // 初期表示
+        updateSlides();
+    </script>
+
+</body>
+</html>
