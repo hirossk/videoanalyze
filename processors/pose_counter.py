@@ -42,9 +42,9 @@ def process(image, pose, counter, stage, prev_current):
         
         # --- 肩の傾きを計算するエリア ---
         
-        # 座標リストから「右肩」と「左肩」の場所(x, y座標)を取り出す
-        right_shoulder = [landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value].x, landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value].y]
-        left_shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x, landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
+        # 座標リストから「右耳」と「左耳」の場所(x, y座標)を取り出す
+        right_shoulder = [landmarks[mp_pose.PoseLandmark.RIGHT_EAR.value].x, landmarks[mp_pose.PoseLandmark.RIGHT_EAR.value].y]
+        left_shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_EAR.value].x, landmarks[mp_pose.PoseLandmark.LEFT_EAR.value].y]
         
         # 右肩と左肩の「高さ(y座標)」の差を計算する
         diff = right_shoulder[1] - left_shoulder[1]

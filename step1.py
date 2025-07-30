@@ -2,10 +2,10 @@
 import streamlit as st
 
 # st.title()は、Webページに一番大きな「看板」を出す命令だよ
-st.title("🎈 はじめてのWebアプリ")
+# st.title("🎈 はじめてのWebアプリ")
 
 # st.write()は、普通の大きさの文字で「説明」を表示する命令
-st.write("名前を入れてEnterキーを押すか、ボタンを押してみてね！")
+# st.write("名前を入れてEnterキーを押すか、ボタンを押してみてね！")
 
 
 # --- ここから「入力フォーム」のエリアだよ、という合図 ---
@@ -15,12 +15,13 @@ with st.form("my_form"):
     # st.text_input()は「文字を入れる箱」を作る命令
     # name = ... の部分は、箱に入れられた文字を
     # 「name」という名前の「いれもの(変数)」に大切にしまっておく、という意味
-    name = st.text_input("ここに名前を入力してください")
+    # name = st.text_input("ここに名前を入力してください")
 
     # st.form_submit_button()は、この封筒専用の「封をして送る」ボタン
     # このボタンが押されたり、フォームの中でEnterキーが押されたりすると、
     # 「submitted」という「いれもの」に「はい、送られました！」という合図(True)が入る
-    submitted = st.form_submit_button("あいさつする")
+    submitted = False
+    # submitted = st.form_submit_button("あいさつする")
     
 
 # --- ボタンが押された後だけ、ここから下のプログラムが動く ---

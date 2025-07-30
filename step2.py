@@ -40,11 +40,15 @@ if st.session_state.run:
         if not success:
             break
 
+        # 画像を白黒（グレースケール）に変換
+        # frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        # 画像を上下反転
+        # frame = cv2.flip(frame, 0)
         # 「空の場所」に、カメラの画像を表示する
         frame_placeholder.image(frame, channels="BGR")
             
     # （ループが終わったら）カメラを解放する（使い終わったら片付ける）
-    # cap.release()
+    cap.release()
 
 # もし「状態いれもの」の中身がFalse(「止める」の合図)だったら…
 else:

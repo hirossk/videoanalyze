@@ -67,8 +67,11 @@ with mp_face_detection.FaceDetection(model_selection=0, min_detection_confidence
             
             # もし顔が見つかったら、その場所に四角を描く
             if results.detections:
-                for detection in results.detections:
-                    mp_drawing.draw_detection(processed_image, detection)
+                # 最初に見つかった顔に対して、四角を描く
+                mp_drawing.draw_detection(processed_image, results.detections[0])
+                pass
+                # for detection in results.detections:
+                    # mp_drawing.draw_detection(processed_image, detection)
 
         # 準備しておいた「空の場所（額縁）」に、処理が終わった画像を表示する
         frame_placeholder.image(processed_image, channels="BGR")

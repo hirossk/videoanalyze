@@ -56,7 +56,9 @@ with mp_hands.Hands(model_complexity=0, min_detection_confidence=0.5, min_tracki
         # 映像を鏡のように左右反転させる
         image = cv2.flip(image, 1)
         # 処理した後の画像を入れるための変数を用意
-        processed_image = image
+        processed_image = image.copy()
+        # 描画エリアを真っ暗にする 黒は0
+        # processed_image[:] = 0
 
         # 画像の色を、AIが理解しやすい「RGB」形式に変換する
         image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -68,9 +70,27 @@ with mp_hands.Hands(model_complexity=0, min_detection_confidence=0.5, min_tracki
             
             # もし手が見つかったら、その場所に骨格を描く
             if results.multi_hand_landmarks:
-                for hand_landmarks in results.multi_hand_landmarks:
-                    mp_drawing.draw_landmarks(processed_image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
-
+                for hand_landmarks, handedness in zip(results.multi_hand_landmarks, results.multi_handedness):
+                    # 手の骨格を描く
+                    # mp_drawing.draw_landmarks(processed_image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+                    # 各指のランドマークインデックス
+                    # finger_names = ['', '', '', '', '']
+                    # finger_tips = [4, 8, 12, 16, 20]
+                    # h, w, _ = processed_image.shape
+                    # for name, tip_idx in zip(finger_names, finger_tips):
+                    #     tip = hand_landmarks.landmark[tip_idx]
+                    #     x, y = int(tip.x * w), int(tip.y * h)
+                    #     cv2.putText(processed_image, name, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,255,0), 2)
+                # 左右の手のランドマークをそれぞれ描く
+                # for idx, handedness in enumerate(results.multi_handedness):
+                #     label = handedness.classification[0].label  # 'Left' or 'Right'
+                #     hand_landmarks = results.multi_hand_landmarks[idx]
+                #     h, w, _ = processed_image.shape
+                #     # 手首の位置に左右ラベルを描画
+                #     wrist = hand_landmarks.landmark[0]
+                #     x, y = int(wrist.x * w), int(wrist.y * h)
+                #     cv2.putText(processed_image, label, (x, y-30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255,0,0), 2)
+                    pass
         # 準備しておいた「空の場所（額縁）」に、処理が終わった画像を表示する
         frame_placeholder.image(processed_image, channels="BGR")
 
