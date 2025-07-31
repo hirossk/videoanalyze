@@ -101,41 +101,41 @@ with mp_face_mesh.FaceMesh(max_num_faces=1, refine_landmarks=True, min_detection
                     # 以下のコメントを全て外すと、サングラスが表示される
                     
                     # # サングラスの幅を、両目の間の距離に合わせて決める
-                    # sunglasses_width = int(abs(right_eye_x - left_eye_x) * SUNG_WIDTH_FACTOR)
+                    sunglasses_width = int(abs(right_eye_x - left_eye_x) * SUNG_WIDTH_FACTOR)
                     # # 元の画像の縦横比を保ったまま、高さを計算
-                    # sh, sw, _ = sunglasses_img.shape
-                    # sunglasses_height = int(sunglasses_width * (sh / sw))
+                    sh, sw, _ = sunglasses_img.shape
+                    sunglasses_height = int(sunglasses_width * (sh / sw))
                     
                     # # サングラスの大きさを変更
-                    # resized_sunglasses = cv2.resize(sunglasses_img, (sunglasses_width, sunglasses_height))
+                    resized_sunglasses = cv2.resize(sunglasses_img, (sunglasses_width, sunglasses_height))
                     
                     # # --- カメラ映像にサングラスを合成 ---
                     # # サングラスを置く中心の座標を決める
-                    # center_x = (left_eye_x + right_eye_x) // 2
-                    # center_y = (left_eye_y + right_eye_y) // 2
+                    center_x = (left_eye_x + right_eye_x) // 2
+                    center_y = (left_eye_y + right_eye_y) // 2
                     
                     # # サングラスを置く左上の座標を計算
-                    # top_left_x = center_x - sunglasses_width // 2
-                    # top_left_y = center_y - sunglasses_height // 2
+                    top_left_x = center_x - sunglasses_width // 2
+                    top_left_y = center_y - sunglasses_height // 2
 
                     # # 元の画像から、サングラスを置く部分（ROI）を切り出す
                     # # エラーを防ぐため、画像の外にはみ出さないように座標を調整
-                    # if top_left_y < 0 or top_left_x < 0 or top_left_y + sunglasses_height > ih or top_left_x + sunglasses_width > iw:
-                    #     continue # はみ出す場合はこのフレームの処理をスキップ
+                    if top_left_y < 0 or top_left_x < 0 or top_left_y + sunglasses_height > ih or top_left_x + sunglasses_width > iw:
+                        continue # はみ出す場合はこのフレームの処理をスキップ
                     
-                    # roi = processed_image[top_left_y: top_left_y + sunglasses_height, top_left_x: top_left_x + sunglasses_width]
+                    roi = processed_image[top_left_y: top_left_y + sunglasses_height, top_left_x: top_left_x + sunglasses_width]
 
                     # # サングラス画像の透明な部分をマスクとして使う
-                    # mask = resized_sunglasses[:, :, 3]
-                    # mask_inv = cv2.bitwise_not(mask)
+                    mask = resized_sunglasses[:, :, 3]
+                    mask_inv = cv2.bitwise_not(mask)
                     
                     # # マスクを使って、元の画像からサングラス部分をくり抜く
-                    # bg = cv2.bitwise_and(roi, roi, mask=mask_inv)
+                    bg = cv2.bitwise_and(roi, roi, mask=mask_inv)
                     # # サングラス画像から、背景が透明なサングラス本体だけを取り出す
-                    # fg = cv2.bitwise_and(resized_sunglasses, resized_sunglasses, mask=mask)
+                    fg = cv2.bitwise_and(resized_sunglasses, resized_sunglasses, mask=mask)
                     
                     # # くり抜いた背景と、サングラス本体を合体させる
-                    # combined = cv2.add(bg, fg[:,:,:3])
+                    combined = cv2.add(bg, fg[:,:,:3])
                     
                     # # 最後に、元の画像に合成したサングラスを上書きする
                     # processed_image[top_left_y: top_left_y + sunglasses_height, top_left_x: top_left_x + sunglasses_width] = combined
