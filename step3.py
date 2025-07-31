@@ -78,12 +78,12 @@ with mp_face_detection.FaceDetection(model_selection=0, min_detection_confidence
                     # 四角とマーカーを描く
                     # mp_drawing.draw_detection(processed_image, detection)
                     # 顔の位置を取得して、絵文字を描く
-                    # bboxC = detection.location_data.relative_bounding_box
-                    # ih, iw, _ = processed_image.shape
-                    # x = int(bboxC.xmin * iw)
-                    # y = int(bboxC.ymin * ih)
-                    # w = int(bboxC.width * iw)
-                    # h = int(bboxC.height * ih)
+                    bboxC = detection.location_data.relative_bounding_box
+                    ih, iw, _ = processed_image.shape
+                    x = int(bboxC.xmin * iw)
+                    y = int(bboxC.ymin * ih)
+                    w = int(bboxC.width * iw)
+                    h = int(bboxC.height * ih)
                     
                     # face_emoji = "A"
                     # font_path = "C:/Windows/Fonts/seguiemj.ttf"  # 必要に応じて変更
