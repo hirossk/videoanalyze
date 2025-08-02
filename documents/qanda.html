@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在校生に聞きたい本音</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .infographic-page {
+            display: none;
+        }
+        .infographic-page.active {
+            display: grid;
+        }
+        .qa-card {
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 1rem;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.2s ease-in-out;
+            min-height: 300px; /* Set a min-height for consistent card size */
+        }
+        .qa-card:hover {
+            transform: translateY(-5px);
+        }
+        .timetable {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+        .timetable th, .timetable td {
+            border: 1px solid #e5e7eb;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        .timetable th {
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen p-4">
+    <div class="w-full max-w-5xl mx-auto">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">在校生に聞きたい本音</h1>
+        </div>
+        <div id="infographic-container" class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+            <!-- Page 1 -->
+            <div id="page-1" class="infographic-page active gap-8 md:grid-cols-2">
+                <!-- Q1: 学習内容 -->
+                <div class="qa-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800">Q1. どんなことを学ぶの？</h3>
+                        <div class="text-5xl text-blue-500">💻</div>
+                    </div>
+                    <div class="mt-auto bg-gray-100 rounded-lg p-3 text-sm">
+                        <h4 class="font-semibold text-gray-700 mb-2">主な学習分野：</h4>
+                        <ul class="grid grid-cols-2 gap-x-4 gap-y-1 text-gray-600">
+                            <li>Java</li>
+                            <li>HTML/CSS</li>
+                            <li>JavaScript</li>
+                            <li>データベース</li>
+                            <li>ネットワーク</li>
+                            <li>システム設計</li>
+                            <li>開発演習</li>
+                            <li>チーム製作</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Q2: 就職活動 -->
+                <div class="qa-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800">Q2. 就職活動のサポートは？</h3>
+                        <div class="text-5xl text-green-500">🤝</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 2 -->
+            <div id="page-2" class="infographic-page gap-8 md:grid-cols-2">
+                <!-- Q3: 先生との距離感 -->
+                <div class="qa-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800">Q3. 先生とは話しやすい？</h3>
+                        <div class="text-5xl text-purple-500">👨‍🏫</div>
+                    </div>
+                </div>
+                <!-- Q4: 学校生活 -->
+                <div class="qa-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800">Q4. 学校生活は楽しい？</h3>
+                        <div class="text-5xl text-yellow-500">🎉</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 3 -->
+            <div id="page-3" class="infographic-page gap-8 md:grid-cols-2">
+                <!-- Q5: 資格取得 -->
+                <div class="qa-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800">Q5. どんな資格が取れる？</h3>
+                        <div class="text-5xl text-red-500">📜</div>
+                    </div>
+                     <div class="mt-auto bg-gray-100 rounded-lg p-3 text-sm">
+                        <h4 class="font-semibold text-gray-700 mb-2">取得目標資格の例：</h4>
+                        <ul class="list-disc list-inside text-gray-600">
+                            <li>基本情報技術者試験</li>
+                            <li>応用情報技術者試験</li>
+                            <li>Oracle認定Javaプログラマ</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Q6: 産学連携 -->
+                <div class="qa-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800">Q6. 企業との連携はある？</h3>
+                         <div class="text-5xl text-indigo-500">🏢</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 4 -->
+            <div id="page-4" class="infographic-page gap-8 md:grid-cols-2">
+                <!-- Q7: 卒業後の進路 -->
+                <div class="qa-card">
+                     <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800">Q7. 卒業後の進路は？</h3>
+                         <div class="text-5xl text-cyan-500">🚀</div>
+                    </div>
+                     <div class="mt-auto bg-gray-100 rounded-lg p-3 text-sm">
+                        <h4 class="font-semibold text-gray-700 mb-2">主な職種：</h4>
+                        <ul class="list-disc list-inside text-gray-600">
+                            <li>システムエンジニア / プログラマ</li>
+                            <li>Webデザイナー / エンジニア</li>
+                            <li>ネットワークエンジニア</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Q8: イベント -->
+                <div class="qa-card">
+                     <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800">Q8. どんなイベントがあるの？</h3>
+                         <div class="text-5xl text-pink-500">🎊</div>
+                    </div>
+                    <div class="mt-auto bg-gray-100 rounded-lg p-3 text-sm">
+                        <h4 class="font-semibold text-gray-700 mb-2">イベントの例：</h4>
+                        <ul class="grid grid-cols-2 gap-x-4 gap-y-1 text-gray-600">
+                            <li>レクリエーション</li>
+                            <li>学園祭</li>
+                            <li>沖縄研修旅行</li>
+                            <li>スポーツ大会</li>
+                            <li>制作発表会</li>
+                            <li>ほかにもあるかも！？</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Page 5 -->
+            <div id="page-5" class="infographic-page gap-8 md:grid-cols-2">
+                <!-- Q9: アルバイト -->
+                <div class="qa-card">
+                     <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800">Q9. アルバイトはできますか？</h3>
+                         <div class="text-5xl text-lime-500">💴</div>
+                    </div>
+                </div>
+                <!-- Q10: 時間割 -->
+                <div class="qa-card">
+                     <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800">Q10. 登下校時間と時間割は？</h3>
+                         <div class="text-5xl text-orange-500">⏰</div>
+                    </div>
+                    <div class="mt-auto">
+                        <table class="timetable">
+                            <thead>
+                                <tr><th>時限</th><th>時間</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1限</td><td>9:00 ~ 10:30</td></tr>
+                                <tr><td>2限</td><td>10:40 ~ 12:10</td></tr>
+                                <tr><td colspan="2">昼休み</td></tr>
+                                <tr><td>3限</td><td>13:00 ~ 14:30</td></tr>
+                                <tr><td>4限</td><td>14:40 ~ 16:10</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="flex items-center justify-center mt-6">
+            <button id="prevBtn" class="bg-white p-2 rounded-full shadow hover:bg-gray-100 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <div id="pagination-dots" class="flex items-center justify-center mx-4"></div>
+            <button id="nextBtn" class="bg-white p-2 rounded-full shadow hover:bg-gray-100 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for pagination
+        let currentPage = 1;
+        const totalPages = 5;
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const dotsContainer = document.getElementById('pagination-dots');
+
+        function showPage(pageNumber) {
+            // Hide all pages
+            document.querySelectorAll('.infographic-page').forEach(page => {
+                page.classList.remove('active');
+            });
+            // Show the current page
+            document.getElementById(`page-${pageNumber}`).classList.add('active');
+
+            updateDots(pageNumber);
+            updateButtons(pageNumber);
+        }
+
+        function updateButtons(pageNumber) {
+            prevBtn.disabled = pageNumber === 1;
+            nextBtn.disabled = pageNumber === totalPages;
+        }
+
+        function updateDots(activePage) {
+            dotsContainer.innerHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                const dot = document.createElement('button');
+                dot.classList.add('w-3', 'h-3', 'rounded-full', 'mx-1', 'transition');
+                if (i === activePage) {
+                    dot.classList.add('bg-blue-600');
+                } else {
+                    dot.classList.add('bg-gray-300', 'hover:bg-gray-400');
+                }
+                dot.onclick = () => {
+                    currentPage = i;
+                    showPage(currentPage);
+                };
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                showPage(currentPage);
+            }
+        });
+
+        // Initial setup
+        showPage(currentPage);
+    </script>
+</body>
+</html>
