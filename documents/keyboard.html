@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日本語キーボード入力ガイド</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f0f2f5;
+        }
+        .slide {
+            width: 100%;
+            max-width: 1200px;
+            aspect-ratio: 16 / 9;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+        .key {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 45px;
+            height: 45px;
+            background: linear-gradient(145deg, #e6e6e6, #ffffff);
+            border: 1px solid #d1d1d1;
+            border-radius: 8px;
+            box-shadow: 3px 3px 5px #b8b8b8, -3px -3px 5px #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            padding: 0 12px;
+            margin: 0 6px;
+            transition: all 0.1s ease-in-out;
+        }
+        .key-large {
+            min-width: 70px;
+        }
+        .plus-sign {
+            font-size: 22px;
+            font-weight: 300;
+            color: #555;
+            margin: 0 8px;
+        }
+        .item-container {
+            background-opacity: 0.8;
+            padding: 16px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <!-- スライドのタイトル -->
+        <header class="text-center mb-6">
+            <h1 class="text-4xl font-bold text-gray-800">日本語キーボード 入力ガイド</h1>
+            <p class="text-lg text-gray-500 mt-2">特定の記号を簡単に入力する方法</p>
+        </header>
+
+        <!-- 6つのセクションをグリッドで表示 -->
+        <main class="flex-grow grid grid-cols-3 grid-rows-2 gap-6">
+            
+            <!-- 1. Ctrl + / -->
+            <div class="item-container bg-blue-50">
+                <h2 class="text-2xl font-bold text-blue-800 mb-3">Ctrl + /</h2>
+                <div class="flex items-center justify-center my-3">
+                    <div class="key key-large">Ctrl</div>
+                    <div class="plus-sign">+</div>
+                    <div class="key">/ め</div>
+                </div>
+                <p class="text-sm text-gray-600 mt-2">
+                    <span class="font-bold">Ctrl</span> + <span class="font-bold">/</span> キー（「め」）
+                </p>
+            </div>
+
+            <!-- 2. : (コロン) -->
+            <div class="item-container bg-green-50">
+                <h2 class="text-2xl font-bold text-green-800 mb-3">: (コロン)</h2>
+                <div class="flex items-center justify-center my-3">
+                    <div class="key">: け</div>
+                </div>
+                <p class="text-sm text-gray-600 mt-2">
+                    <span class="font-bold">:</span> キー（「け」）
+                </p>
+            </div>
+
+            <!-- 3. " (ダブルクォーテーション) -->
+            <div class="item-container bg-yellow-50">
+                <h2 class="text-2xl font-bold text-yellow-800 mb-3">" (クォート)</h2>
+                <div class="flex items-center justify-center my-3">
+                    <div class="key key-large">Shift</div>
+                    <div class="plus-sign">+</div>
+                    <div class="key">" ふ 2</div>
+                </div>
+                <p class="text-sm text-gray-600 mt-2">
+                    <span class="font-bold">Shift</span> + <span class="font-bold">2</span> キー（「ふ」）
+                </p>
+            </div>
+
+            <!-- 4. ( (左括弧) -->
+            <div class="item-container bg-red-50">
+                <h2 class="text-2xl font-bold text-red-800 mb-3">( (左括弧)</h2>
+                <div class="flex items-center justify-center my-3">
+                    <div class="key key-large">Shift</div>
+                    <div class="plus-sign">+</div>
+                    <div class="key">( ゆ 8</div>
+                </div>
+                <p class="text-sm text-gray-600 mt-2">
+                    <span class="font-bold">Shift</span> + <span class="font-bold">8</span> キー（「ゆ」）
+                </p>
+            </div>
+            
+            <!-- 5. + (プラス) -->
+            <div class="item-container bg-orange-50">
+                <h2 class="text-2xl font-bold text-orange-800 mb-3">+ (プラス)</h2>
+                <div class="flex items-center justify-center my-3">
+                    <div class="key key-large">Shift</div>
+                    <div class="plus-sign">+</div>
+                    <div class="key">+ れ ;</div>
+                </div>
+                <p class="text-sm text-gray-600 mt-2">
+                    <span class="font-bold">Shift</span> + <span class="font-bold">;</span> キー（「れ」）
+                </p>
+            </div>
+
+            <!-- 6. = (イコール) -->
+            <div class="item-container bg-teal-50">
+                <h2 class="text-2xl font-bold text-teal-800 mb-3">= (イコール)</h2>
+                <div class="flex items-center justify-center my-3">
+                    <div class="key key-large">Shift</div>
+                    <div class="plus-sign">+</div>
+                    <div class="key">= ほ -</div>
+                </div>
+                <p class="text-sm text-gray-600 mt-2">
+                    <span class="font-bold">Shift</span> + <span class="font-bold">-</span> キー（「ほ」）
+                </p>
+            </div>
+
+        </main>
+    </div>
+</body>
+</html>
