@@ -137,7 +137,7 @@ with mp_face_mesh.FaceMesh(max_num_faces=1, refine_landmarks=True, min_detection
                     combined = cv2.add(bg, fg[:,:,:3])
                     
                     # # 最後に、元の画像に合成したサングラスを上書きする
-                    processed_image[top_left_y: top_left_y + sunglasses_height, top_left_x: top_left_x + sunglasses_width] = combined
+                    # processed_image[top_left_y: top_left_y + sunglasses_height, top_left_x: top_left_x + sunglasses_width] = combined
 
         # 準備しておいた「空の場所（額縁）」に、処理が終わった画像を表示する
         frame_placeholder.image(processed_image, channels="BGR")

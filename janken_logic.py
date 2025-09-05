@@ -26,15 +26,8 @@ def classify_hand_gesture(hand_landmarks, image_shape):
             count += 1
 
     # ヒント5: 伸びている指の本数に応じて、返す手を変える
-    # 4本以上伸びていたら「パー」
-    if count >= 4:
-        return "PA"
-    # 2本伸びていたら「チョキ」
-    elif count == 2:
-        return "CHOKI"
-    # 1本以下なら「グー」
-    elif count <= 1:
-        return "GU"
+    # countの数でぐーちょきぱーを判定する
+
 
     return "UNKNOWN" # どれにも当てはまらない場合
 
@@ -59,11 +52,10 @@ def decide_winner(player_hand, ai_hand):
 
     # ヒント2: プレイヤーが勝つ（WIN）組み合わせを考える
     # Pythonでは (A and B) or (C and D) のように条件を組み合わせられる
-    if (player_hand == "GU" and ai_hand == "CHOKI") or \
-       (player_hand == "CHOKI" and ai_hand == "PA") or \
-       (player_hand == "PA" and ai_hand == "GU"):
-        return "WIN"
+    # player_handとai_handで勝敗が決まる。
+
+        # return "WIN"
 
     # ヒント3: 上のいずれにも当てはまらなければ、プレイヤーの負け（LOSE）
-    else:
-        return "LOSE"
+    # else:
+    #     return "LOSE"
