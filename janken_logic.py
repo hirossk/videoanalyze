@@ -53,9 +53,11 @@ def decide_winner(player_hand, ai_hand):
     # ヒント2: プレイヤーが勝つ（WIN）組み合わせを考える
     # Pythonでは (A and B) or (C and D) のように条件を組み合わせられる
     # player_handとai_handで勝敗が決まる。
-
-        # return "WIN"
+    if player_hand == "" and ai_hand == "" or \
+       player_hand == "" and ai_hand == "" or \
+         player_hand == "" and ai_hand == "":
+        return ""
 
     # ヒント3: 上のいずれにも当てはまらなければ、プレイヤーの負け（LOSE）
-    # else:
-    #     return "LOSE"
+    else:
+        return ""
