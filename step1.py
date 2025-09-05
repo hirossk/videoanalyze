@@ -2,10 +2,10 @@
 import streamlit as st
 
 # st.title()は、Webページに一番大きな「看板」を出す命令だよ
-# st.title("🎈 はじめてのWebアプリ")
+st.title("🎈 はじめてのWebアプリ")
 
 # st.write()は、普通の大きさの文字で「説明」を表示する命令
-# st.write("名前を入れてEnterキーを押すか、ボタンを押してみてね！")
+st.write("名前を入れてEnterキーを押すか、ボタンを押してみてね！")
 
 
 # --- ここから「入力フォーム」のエリアだよ、という合図 ---
@@ -21,7 +21,8 @@ with st.form("my_form"):
     # このボタンが押されたり、フォームの中でEnterキーが押されたりすると、
     # 「submitted」という「いれもの」に「はい、送られました！」という合図(True)が入る
     submitted = False
-    # submitted = st.form_submit_button("あいさつする")
+    greeting = st.selectbox("あいさつを選んでください", ["こんにちは！", "おはよう！", "こんばんは！"])
+    submitted = st.form_submit_button("あいさつする")
     
 
 # --- ボタンが押された後だけ、ここから下のプログラムが動く ---
@@ -35,7 +36,7 @@ if submitted:
         # st.success()は、成功した感じの緑色のメッセージを表示する命令
         # f"{name}さん..." の部分で、さっき「name」のいれものに入れた文字と、
         # 「さん、こんにちは！」という言葉を合体させて表示しているんだ
-        st.success(f"{name}さん、こんにちは！")
+        st.success(f"{name}さん、{greeting}")
         
     # 「もし、"name"のいれものが空っぽだったら…」という意味
     else:
