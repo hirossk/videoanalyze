@@ -49,9 +49,8 @@ st.sidebar.markdown(f"**現在のモード:** `{st.session_state['mode']}`")
 frame_placeholder = st.empty()
 cap = cv2.VideoCapture(0)
 
-# サングラスの画像をダウンロード（最初に1回だけ実行される）
-sunglasses_url = "https://irasutoya.jp/wp-content/uploads/2020/08/anim-shonsangurasu-no-irasuto-png-t-ka.png"
-sunglasses_img = load_image_from_url(sunglasses_url)
+# サングラスの画像をローカルファイルから読み込む
+sunglasses_img = cv2.imread("glasses/glasses1.png", cv2.IMREAD_UNCHANGED)
 
 
 # 「顔の細かい特徴を見つける専門家」を呼び出して、準備してもらう
@@ -138,7 +137,7 @@ with mp_face_mesh.FaceMesh(max_num_faces=1, refine_landmarks=True, min_detection
                     combined = cv2.add(bg, fg[:,:,:3])
                     
                     # # 最後に、元の画像に合成したサングラスを上書きする
-                    # processed_image[top_left_y: top_left_y + sunglasses_height, top_left_x: top_left_x + sunglasses_width] = combined
+                    processed_image[top_left_y: top_left_y + sunglasses_height, top_left_x: top_left_x + sunglasses_width] = combined
 
         # 準備しておいた「空の場所（額縁）」に、処理が終わった画像を表示する
         frame_placeholder.image(processed_image, channels="BGR")
