@@ -166,7 +166,7 @@ if st.session_state.running:
                 cv2.circle(frame, index_pos, 6, (0, 255, 255), -1)
 
             else:
-                draw_text_with_bg(frame, "手が見えていません", pos=(20, 40), bg=(60,60,60))
+                draw_text_with_bg(frame, "No hands are in the camera frame.", pos=(20, 40), bg=(60,60,60))
 
             # ストローク記録 & レイヤー描画
             if draw_now and index_pos is not None:
