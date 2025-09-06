@@ -74,6 +74,7 @@ with mp_hands.Hands(model_complexity=0, min_detection_confidence=0.5, min_tracki
                     # 手の骨格を描く
                     # mp_drawing.draw_landmarks(processed_image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
                     # 各指のランドマークインデックス
+                    # Thumb (親指), Index finger (人差し指), Middle finger (中指), Ring finger (薬指), Little finger (小指)
                     finger_names = ['', '', '', '', '']
                     finger_tips = [4, 8, 12, 16, 20]
                     h, w, _ = processed_image.shape
