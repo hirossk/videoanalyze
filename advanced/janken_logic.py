@@ -27,7 +27,8 @@ def classify_hand_gesture(hand_landmarks, image_shape):
 
     # ヒント5: 伸びている指の本数に応じて、返す手を変える
     # countの数でぐーちょきぱーを判定する
-
+    if count == 0:
+        pass
 
     return "UNKNOWN" # どれにも当てはまらない場合
 
