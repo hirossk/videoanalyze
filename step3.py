@@ -85,10 +85,9 @@ with mp_face_detection.FaceDetection(model_selection=0, min_detection_confidence
                     w = int(bboxC.width * iw)
                     h = int(bboxC.height * ih)
                     
-                    # face_emoji = "A"
-                    # font_path = "C:/Windows/Fonts/seguiemj.ttf"  # 必要に応じて変更
+                    face_emoji = ""  # 顔の絵文字
                     # # 顔の中心座標を計算
-                    # processed_image = draw_face_emoji(processed_image, x, y, w, h, face_emoji, font_path)
+                    processed_image = draw_face_emoji(processed_image, x, y, w, h, face_emoji)
 
         # 準備しておいた「空の場所（額縁）」に、処理が終わった画像を表示する
         frame_placeholder.image(processed_image, channels="BGR")

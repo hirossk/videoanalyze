@@ -21,7 +21,7 @@ with st.form("my_form"):
     # このボタンが押されたり、フォームの中でEnterキーが押されたりすると、
     # 「submitted」という「いれもの」に「はい、送られました！」という合図(True)が入る
     submitted = False
-    # greeting = st.selectbox("あいさつを選んでください", ["こんにちは！", "おはよう！", "こんばんは！"])
+    # greeting = st.selectbox("あいさつを選んでください", ["こんにちは！", "", ""])
     # submitted = st.form_submit_button("あいさつする")
     
 
