@@ -558,8 +558,11 @@ if start_clicked:
 if stop_clicked:
     st.session_state.running = False
 
-video_placeholder = st.empty()
-info_placeholder = st.empty()
+# カメラ映像は画面いっぱいだと大きすぎるので、中央 80% 幅に収める
+_vp_left, _vp_center, _vp_right = st.columns([1, 8, 1])
+with _vp_center:
+    video_placeholder = st.empty()
+    info_placeholder = st.empty()
 
 
 # ============================================================
