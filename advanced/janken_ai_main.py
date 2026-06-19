@@ -25,7 +25,7 @@ def draw_overlay_text(img, text, pos=(30, 50), color=(0, 255, 0), scale=1.2, thi
     cv2.putText(img, text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, scale, color, thickness, cv2.LINE_AA)
     return img
 
-st.set_page_config(page_title="シンプルじゃんけんAI(修正版)", page_icon="✊")
+st.set_page_config(page_title="シンプルじゃんけんAI(修正版)", page_icon="✊", layout="wide")
 st.title("✊✌️🖐️ シンプルじゃんけんAI（修正版）")
 
 with st.sidebar:
@@ -68,7 +68,9 @@ a_metric_ph = col2.empty()
 res_text_ph = col3.empty()
 
 # ビデオ表示プレースホルダ
-video_placeholder = st.empty()
+# 映像を画面幅の約80%に収めるため、中央のカラムに表示する（左右に余白を作る [1:8:1]）
+_, _col_video, _ = st.columns([1, 8, 1])
+video_placeholder = _col_video.empty()
 info_placeholder = st.empty()
 
 def update_scoreboard():
@@ -112,7 +114,7 @@ if st.session_state.playing:
             if now < show_result_until:
                 txt = f"YOU: {player_choice or '-'}   AI: {ai_choice or '-'}   => {st.session_state.last_result}"
                 frame = draw_overlay_text(frame, txt, pos=(20, 60), color=(0,255,255), scale=0.9, thickness=2)
-                video_placeholder.image(frame, channels="BGR", use_container_width=True)
+                video_placeholder.image(frame, channels="BGR", width="stretch")
                 time.sleep(0.01)
                 continue
             else:
@@ -134,7 +136,7 @@ if st.session_state.playing:
             sec_left = int(st.session_state.countdown_end - time.time())
             if sec_left >= 1:
                 frame = draw_overlay_text(frame, f"{sec_left}", pos=(30, 120), color=(255,255,0), scale=3.0, thickness=6)
-                video_placeholder.image(frame, channels="BGR", use_container_width=True)
+                video_placeholder.image(frame, channels="BGR", width="stretch")
                 time.sleep(0.01)
                 continue
 
@@ -162,7 +164,7 @@ if st.session_state.playing:
                 st.session_state.countdown_end = time.time() + ROUND_SECONDS
                 st.session_state.buff.clear()
 
-            video_placeholder.image(frame, channels="BGR", use_container_width=True)
+            video_placeholder.image(frame, channels="BGR", width="stretch")
             # ループ回りすぎ抑制
             time.sleep(0.005)
 

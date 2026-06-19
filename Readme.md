@@ -91,24 +91,7 @@ streamlit run step4.py
 
 ---
 
-### Step 5 ── ストレッチ回数カウンター `step5.py`
-
-**テーマ：** AI（MediaPipe）で体の姿勢を検出し、腕のストレッチ回数を自動で数える。
-
-**やること：**
-1. そのまま実行して「ストレッチ」ボタンを押し、腕を上げ下げしてみる
-2. カウントが正しく増えるか確認する
-3. `processors/pose_counter.py` を開いて、中身を読んでみよう（どうやって姿勢を判定しているか）
-
-**確認ポイント：** 腕を上げて水平にするたびに、画面のカウンターが増える。
-
-```bash
-streamlit run step5.py
-```
-
----
-
-### Step 6 ── バーチャル・サングラスをかけよう `step6.py`
+### Step 5 ── バーチャル・サングラスをかけよう `step5.py`
 
 **テーマ：** AI（MediaPipe FaceMesh）で顔の細かいパーツを検出し、サングラス画像を顔に合成する。
 
@@ -124,6 +107,23 @@ streamlit run step5.py
    `processed_image[...] = combined` の `#` を外して、サングラスを顔に合成する
 
 **確認ポイント：** カメラに顔を向けると、顔の動きに追従してサングラスが表示される。
+
+```bash
+streamlit run step5.py
+```
+
+---
+
+### Step 6 ── ストレッチ回数カウンター `step6.py`
+
+**テーマ：** AI（MediaPipe）で体の姿勢を検出し、腕のストレッチ回数を自動で数える。
+
+**やること：**
+1. そのまま実行して「ストレッチ」ボタンを押し、腕を上げ下げしてみる
+2. カウントが正しく増えるか確認する
+3. `processors/pose_counter.py` を開いて、中身を読んでみよう（どうやって姿勢を判定しているか）
+
+**確認ポイント：** 腕を上げて水平にするたびに、画面のカウンターが増える。
 
 ```bash
 streamlit run step6.py
@@ -185,8 +185,8 @@ videoanalyze/
 ├── step2.py              # Step 2: カメラ表示
 ├── step3.py              # Step 3: 顔の検出
 ├── step4.py              # Step 4: 手の検出・指ラベル
-├── step5.py              # Step 5: ストレッチカウンター
-├── step6.py              # Step 6: バーチャルサングラス
+├── step5.py              # Step 5: バーチャルサングラス
+├── step6.py              # Step 6: ストレッチカウンター
 ├── advanced/
 │   ├── air_paint.py      # 応用: エアペイント
 │   ├── janken_ai_main.py # 応用: じゃんけんAI（メイン）

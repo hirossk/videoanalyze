@@ -33,7 +33,7 @@ def ensure_layer(layer, shape):
 # ------------------------------
 # Streamlit UI
 # ------------------------------
-st.set_page_config(page_title="エアペイント", page_icon="🎨")
+st.set_page_config(page_title="エアペイント", page_icon="🎨", layout="wide")
 st.title("🎨 エアペイント（Streamlit + MediaPipe Hands）")
 
 with st.sidebar:
@@ -96,7 +96,9 @@ if undo and len(st.session_state.strokes) > 0 and st.session_state.draw_layer is
     st.session_state.strokes.pop()
     st.session_state.draw_layer = rebuild_layer_from_strokes(st.session_state.draw_layer.shape)
 
-video_placeholder = st.empty()
+# 映像を画面幅の約80%に収めるため、中央のカラムに表示する（左右に余白を作る [1:8:1]）
+_, _col_video, _ = st.columns([1, 8, 1])
+video_placeholder = _col_video.empty()
 hint_placeholder = st.empty()
 
 # ------------------------------
@@ -196,7 +198,7 @@ if st.session_state.running:
 
             # レイヤーとフレーム合成
             out = cv2.addWeighted(frame, 1.0, st.session_state.draw_layer, alpha, 0)
-            video_placeholder.image(out, channels="BGR", use_container_width=True)
+            video_placeholder.image(out, channels="BGR", width="stretch")
 
             # 保存要求の処理（UIはループ外で作っているので毎フレーム確認）
             if save:

@@ -11,10 +11,13 @@ mp_hands = mp.solutions.hands
 
 # --- ここからWebページの見た目を作る ---
 
+# ページ全体の設定。layout="wide" で画面を広く使う（最初のStreamlit命令にするのがルール）
+st.set_page_config(page_title="手の検出アプリ", page_icon="🖐️", layout="wide")
+
 # Webページに一番大きな「看板（タイトル）」を出す
 st.title("📹 リアルタイムAI解析アプリを作ろう！")
-# 画面の左側（サイドバー）に「説明」を表示する
-st.sidebar.markdown("モードを選択してください")
+# st.caption() で、タイトルの下に小さな説明文を出す
+st.caption("AI（MediaPipe）で手の骨格を検出し、各指先にラベルを表示します")
 
 
 # --- ボタンが押されたときの「状態」を覚えておく仕組み ---
@@ -24,22 +27,35 @@ st.sidebar.markdown("モードを選択してください")
 if 'mode' not in st.session_state:
     st.session_state['mode'] = 'Stop'
 
-# 「手の検出」ボタン。押されると、「状態いれもの」に「Hands」という文字を入れる
-if st.sidebar.button("🖐️ 手の検出 (MediaPipe)"):
-    st.session_state['mode'] = 'Hands'
+# with st.sidebar: と書くと、この中の命令がぜんぶ左側のサイドバーに表示される
+with st.sidebar:
+    st.header("🎛️ コントロール")
+    st.caption("ボタンでモードを切り替えます")
 
-# 「停止」ボタン。押されると、「状態いれもの」に「Stop」という文字を入れる
-if st.sidebar.button("🛑 停止"):
-    st.session_state['mode'] = 'Stop'
+    # 「手の検出」ボタン。押されると、「状態いれもの」に「Hands」という文字を入れる
+    # width="stretch" でボタンをサイドバーの幅いっぱいに広げる
+    if st.button("🖐️ 手の検出 (MediaPipe)", width="stretch", type="primary"):
+        st.session_state['mode'] = 'Hands'
 
-# 今の状態（モード）をサイドバーに表示する
-st.sidebar.markdown(f"**現在のモード:** `{st.session_state['mode']}`")
+    # 「停止」ボタン。押されると、「状態いれもの」に「Stop」という文字を入れる
+    if st.button("🛑 停止", width="stretch"):
+        st.session_state['mode'] = 'Stop'
+
+    # st.divider() で区切り線を引く
+    st.divider()
+
+    # st.badge() で、今の状態を色つきラベルでわかりやすく表示する
+    if st.session_state['mode'] == 'Stop':
+        st.badge("停止中", icon="⚪", color="grey")
+    else:
+        st.badge(f"実行中: {st.session_state['mode']}", icon="🟢", color="green")
 
 
 # --- ここからカメラの映像を処理する ---
 
-# 映像を表示するための「空の場所（額縁）」をページに用意する
-frame_placeholder = st.empty()
+# 映像を画面幅の約80%に収めるため、中央のカラムに表示する（左右に余白を作る [1:8:1]）
+_, _col_video, _ = st.columns([1, 8, 1])
+frame_placeholder = _col_video.empty()
 # PCのカメラを起動する
 cap = cv2.VideoCapture(0)
 
@@ -84,7 +100,8 @@ with mp_hands.Hands(model_complexity=0, min_detection_confidence=0.5, min_tracki
                     #     cv2.putText(processed_image, name, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,255,0), 2)
 
         # 準備しておいた「空の場所（額縁）」に、処理が終わった画像を表示する
-        frame_placeholder.image(processed_image, channels="BGR")
+        # width="stretch" で映像を画面の幅いっぱいに広げる
+        frame_placeholder.image(processed_image, channels="BGR", width="stretch")
 
 # （ループが終わったら）使い終わったカメラを解放する（お片付け）
 cap.release()

@@ -1,6 +1,10 @@
 # 最初に、Streamlitという魔法の道具箱を使えるように準備するおまじない
 import streamlit as st
 
+# st.set_page_config() は、ページ全体の設定をする命令だよ（ブラウザのタブ名やアイコン）
+# 一番最初のStreamlit命令として書くのがルール
+st.set_page_config(page_title="はじめてのWebアプリ", page_icon="🎈")
+
 # st.title()は、Webページに一番大きな「看板」を出す命令だよ
 # st.title("🎈 はじめてのWebアプリ")
 
