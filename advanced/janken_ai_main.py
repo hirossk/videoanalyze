@@ -12,7 +12,7 @@ import mediapipe as mp
 
 import janken_logic  # 判定ロジック
 
-ROUND_SECONDS = 5
+ROUND_SECONDS = 9
 SAMPLE_FRAMES = 3
 
 def ai_choose():
