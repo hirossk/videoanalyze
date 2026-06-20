@@ -12,7 +12,7 @@ import mediapipe as mp
 
 import janken_logic  # 判定ロジック
 
-ROUND_SECONDS = 4
+ROUND_SECONDS = 5
 SAMPLE_FRAMES = 3
 
 def ai_choose():
@@ -30,8 +30,7 @@ st.title("✊✌️🖐️ シンプルじゃんけんAI（修正版）")
 
 with st.sidebar:
     st.header("コントロール")
-    start_clicked = st.button("🎮 ゲーム開始")
-    stop_clicked  = st.button("🛑 停止")
+    start_clicked = st.button("✊ じゃんけん開始！")
     reset_score = st.button("🔁 スコアリセット")
 
 # 状態
@@ -57,9 +56,6 @@ if start_clicked:
     st.session_state.playing = True
     st.session_state.countdown_end = time.time() + ROUND_SECONDS
     st.session_state.buff.clear()
-
-if stop_clicked:
-    st.session_state.playing = False
 
 # スコア用プレースホルダ（ループ内で更新する）
 col1, col2, col3 = st.columns([1, 1, 2])
@@ -119,6 +115,7 @@ if st.session_state.playing:
                 continue
             else:
                 round_locked = False
+                
 
             # 手検出
             results = hands.process(rgb)
@@ -160,9 +157,15 @@ if st.session_state.playing:
                 # スコア表示を更新（rerunせずに反映）
                 update_scoreboard()
 
-                show_result_until = time.time() + 1.2
-                st.session_state.countdown_end = time.time() + ROUND_SECONDS
+                # 結果を表示して、このラウンドは終了
+                # （もう一度遊ぶには再度「✊ じゃんけん開始！」を押す。スコアは累積されたまま）
+                txt = f"YOU: {player_choice or '-'}   AI: {ai_choice or '-'}   => {st.session_state.last_result}"
+                frame = draw_overlay_text(frame, txt, pos=(20, 60), color=(0,255,255), scale=0.9, thickness=2)
+                video_placeholder.image(frame, channels="BGR", width="stretch")
+                time.sleep(2.0)
+                st.session_state.playing = False
                 st.session_state.buff.clear()
+                break
 
             video_placeholder.image(frame, channels="BGR", width="stretch")
             # ループ回りすぎ抑制
@@ -171,4 +174,4 @@ if st.session_state.playing:
     cap.release()
     cv2.destroyAllWindows()
 else:
-    info_placeholder.info("左の「🎮 ゲーム開始」を押すとカメラが起動します。")
+    info_placeholder.info("左の「✊ じゃんけん開始！」を押すと、5秒のカウントダウンの後にじゃんけんを判定します。")

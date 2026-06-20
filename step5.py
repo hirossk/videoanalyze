@@ -47,7 +47,7 @@ with st.sidebar:
     st.caption("ボタンでモードを切り替えます")
 
     # width="stretch" でボタンをサイドバーの幅いっぱいに広げる
-    if st.button("😎 サングラスをかける", width="stretch", type="primary"):
+    if st.button("AIカメラ起動", width="stretch", type="primary"):
         st.session_state['mode'] = 'Sunglasses'
     if st.button("🛑 停止", width="stretch"):
         st.session_state['mode'] = 'Stop'

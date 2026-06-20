@@ -34,7 +34,7 @@ with st.sidebar:
 
     # 「手の検出」ボタン。押されると、「状態いれもの」に「Hands」という文字を入れる
     # width="stretch" でボタンをサイドバーの幅いっぱいに広げる
-    if st.button("🖐️ 手の検出 (MediaPipe)", width="stretch", type="primary"):
+    if st.button("AIカメラ起動", width="stretch", type="primary"):
         st.session_state['mode'] = 'Hands'
 
     # 「停止」ボタン。押されると、「状態いれもの」に「Stop」という文字を入れる
