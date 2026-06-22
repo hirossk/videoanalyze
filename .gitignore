@@ -7,3 +7,5 @@ Scripts
 __pycache__/
 etc
 share
+node_modules
+dist
