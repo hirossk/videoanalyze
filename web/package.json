@@ -1,0 +1,21 @@
+{
+  "name": "videoanalyze-web",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "AIを使った動画分析 体験入学コース（React版）",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@mediapipe/tasks-vision": "0.10.18",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^5.4.11"
+  }
+}
